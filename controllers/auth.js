@@ -59,7 +59,13 @@ exports.signout = (req, res) => {
 
 exports.requireSignin = expressJwt({
   secret: process.env.JWT_SECRET,
-  userProperty: 'auth'
+  userProperty: 'auth',
+  isRevoked: (req, payload, done) => {
+    // Implement token revocation logic here
+    // Example: Check if the token is in a blacklist
+    const tokenRevoked = false; // Replace with actual revocation logic
+    done(null, tokenRevoked);
+  }
 });
 
 exports.isAuth = (req, res, next) => {
